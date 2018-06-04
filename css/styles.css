@@ -43,7 +43,6 @@ nav{
 .nav_logo a:active{color: #e39e54;}
 
 .nav_account{
-	display: inline-block;
 	padding-right: 20px;
 	float: right;
 }
@@ -104,6 +103,19 @@ nav{
 .post a:link{color: #000;}
 .post a:active{color: #e39e54;}
 
+.post .votes{
+	float: left;
+	height: 80px; 
+	margin-right: 10px;
+}
+.post .votes button{
+	height: 40px;
+	width: 40px;
+	font-size: 20px;
+	border: 0;
+	background-color: transparent;
+}
+.post .votes button:active{font-size: 22px;}
 .post img{
 	float: left;
 	padding-right: 20px;

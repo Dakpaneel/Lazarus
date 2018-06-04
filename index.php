@@ -1,3 +1,21 @@
+<?php
+$post_content = [];
+$post_content[] = '<div class="post" tabindex="1">';
+$post_content[] = '<div class="votes">';
+$post_content[] = '<div class="upvote">';
+$post_content[] = '<button><i class="far fa-arrow-alt-circle-up"></i></button>';
+$post_content[] = '</div>';
+$post_content[] = '<div class="downvote">';
+$post_content[] = '<button><i class="far fa-arrow-alt-circle-down"></i></button>';
+$post_content[] = '</div>';
+$post_content[] = '</div>';
+$post_content[] = '<img src="https://lucenthealth.com/wp-content/uploads/PROFILE-PHOTO-PLACEHOLDER.png" alt="u_avatar">';
+$post_content[] = '<p class="post_title"><a href="#">Test post title.</a></p>';
+$post_content[] = '<p class="post_date">Posted on: 01/01/2010</p>';
+$post_content[] = '<br>';
+$post_content[] = '<p class="post_user">Posted by: <a href="#">User</a></p>';
+$post_content[] = '</div>';
+?>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -40,13 +58,16 @@
 				</select>
 			</div>
 			<div class="main_posts">
-				<div class="post" tabindex="1">
-						<img src="https://lucenthealth.com/wp-content/uploads/PROFILE-PHOTO-PLACEHOLDER.png" alt="u_avatar">
-						<p class="post_title"><a href="#">Test post title.</a></p>
-						<p class="post_date">Posted on: 01/01/2010</p>
-						<br>
-						<p class="post_user">Posted by: <a href="#">User</a></p>
-				</div>
+				<?php
+				for ($x = 0; $x <= 10; $x++) { 
+					if (isset($post_content)){
+						foreach ($post_content as $key => $content){
+							echo $content;
+						}
+					}
+				}
+				
+				?>
 			</div>
 		</main>
 		<!-- End main -->
