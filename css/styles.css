@@ -70,6 +70,19 @@ nav{
 	margin-right: 1%;
 	border: 1px solid #bbb;
 }
+.main_nav{
+	border-bottom: 1px solid #bbb;
+	display: inline-block;
+	width: 100%;
+	height: 30px;
+}
+.main_nav p{
+	float: left;
+}
+.main_nav select{
+	border: 0;
+	font-size: 14px;
+}
 
 .sidebar{
 	float: right;
