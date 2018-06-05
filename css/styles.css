@@ -39,7 +39,7 @@ nav{
 .nav_logo a{text-decoration: none;transition: 0.2s;}
 .nav_logo a:visited{color: #fff;}
 .nav_logo a:hover{color: #d64d4d;}
-.nav_logo:link{color: #fff;}
+.nav_logo a:link{color: #fff;}
 .nav_logo a:active{color: #e39e54;}
 
 .nav_account{
@@ -177,9 +177,12 @@ nav{
 	color: #444;
 }
 
+/*
+	Start of footer
+*/
 footer{
 	float: left;
-	background-color: #fff;
+	background-color: #4d7358;
 	height: 180px;
 	width: 100%;
 	margin-top: 1%;
@@ -205,7 +208,7 @@ footer{
 	display: block;
 }
 .item{text-decoration: none;transition: 0.2s;}
-.item:visited{color: #444;}
-.item:hover{color: #4d7358;}
-.item:link{color: #444;}
-.item:active{color: #9ed670;}
+.item:visited{color: #fff;}
+.item:hover{color: #d64d4d;}
+.item:link{color: #fff;}
+.item:active{color: #e39e54;}
