@@ -115,6 +115,10 @@ nav{
 	border-radius: 5px;
 	height: auto;
 }
+.errorpost{
+	text-align: center;
+	margin-top: 20px;
+}
 .post:focus{
 	outline: none;
 	height: auto;
