@@ -5,6 +5,9 @@ color: #d64d4d;
 color: #4d7358;
 color: #9ed670;
 }
+/*
+					Essentials
+*/
 *{box-sizing: border-box; padding: 0; margin: 0; font-family: 'Open Sans', sans-serif;}
 .title{font-family: 'Lora', serif;}
 select, button, input{outline: none;}
@@ -19,6 +22,12 @@ main, footer{
 	padding: 20px;
 }
 
+/*
+					Main CSS
+*/
+/*
+	Navigation bar
+*/
 nav{
 	background-color: #4d7358;
 	height: 60px;
@@ -27,7 +36,6 @@ nav{
 	border-bottom: 1px solid #bbb;
 	color: white;
 }
-
 .nav_logo{
 	float: left;
 	height: 60px;
@@ -41,7 +49,6 @@ nav{
 .nav_logo a:hover{color: #d64d4d;}
 .nav_logo a:link{color: #fff;}
 .nav_logo a:active{color: #e39e54;}
-
 .nav_account{
 	padding-right: 20px;
 	float: right;
@@ -59,6 +66,9 @@ nav{
 .account_items a:link{color: #fff;}
 .account_items a:active{color: #e39e54;}
 
+/*
+	Main section
+*/
 .container{
 	background-color: #fff;
 	border-radius: 5px;
@@ -68,6 +78,15 @@ nav{
 	width: 77%;
 	margin-left: 1%;
 	margin-right: 1%;
+	border: 1px solid #bbb;
+}
+.container_form{
+	background-color: #fff;
+	border-radius: 5px;
+	height: auto;
+	min-height: 70.71vh;
+	width: 48%;
+	margin: 0 auto;
 	border: 1px solid #bbb;
 }
 .main_nav{
@@ -85,17 +104,50 @@ nav{
 	border: 0;
 	font-size: 18px;
 }
+
+/*
+	Posts
+*/
 .post{
 	margin: 10px 0px;
 	padding: 10px;
 	border: 1px solid #bbb;
 	border-radius: 5px;
-	height: 100px;
-	transition: 0.1s;
+	height: auto;
 }
 .post:focus{
 	outline: none;
-	background-color: #eee;
+	height: auto;
+}
+.post .post_content{
+	display: none;
+}
+.post:focus .post_content{
+	display: block;
+	margin-top: 10px;
+	margin-left: 150px;
+	animation-name: content_float;
+	animation-duration: 0.2s;
+	animation-timing-function: ease-out;
+	animation-direction: normal;
+}
+.readmore{
+	position: absolute;
+	margin-top: -38px;
+	margin-left: 320px;
+	cursor: pointer;
+}
+.post:focus .readmore{
+	display: none;
+}
+
+@keyframes content_float{
+	from{transform: translateY(-20px); color: transparent;}
+	to{margin-top: 10px; color: black;}
+}
+
+.post:hover{
+	background-color: #f5f5f5;
 }
 .post a{text-decoration: none;transition: 0.2s;}
 .post a:visited{color: #000;}
@@ -114,6 +166,7 @@ nav{
 	font-size: 20px;
 	border: 0;
 	background-color: transparent;
+	color: #444;
 }
 .post .votes button:active{font-size: 22px;}
 .post img{
@@ -126,8 +179,17 @@ nav{
 	font-size: 20px;
 }
 .post_date{float: left; color: #666;}
-.post_user{color: #666;}
+.post_date p{
+	float: right;
+}
+.post_user{
+	color: #666;
+	padding-bottom: 15px;
+}
 
+/*
+	Sidebar
+*/
 .sidebar{
 	float: right;
 	margin-right: 1%;
@@ -135,6 +197,9 @@ nav{
 	width: 20%;
 }
 
+/*
+	Searchbar
+*/
 .searchpost{
 	height: 60px;
 	border: 1px solid #bbb;
@@ -160,7 +225,13 @@ nav{
 	border: 0;
 	color: #444;
 }
+.fa-search{
+	width: 40px;
+}
 
+/*
+	Submit buttons
+*/
 .new_link_post, .new_text_post{
 	height: 60px;
 	background-color: #d64d4d;
@@ -170,7 +241,6 @@ nav{
 	transition: 0.2s;
 	color: #fff;
 }
-
 .new_link_post:hover, .new_text_post:hover{
 	cursor: pointer;
 	background-color: #e47171;
@@ -192,13 +262,13 @@ footer{
 	display: block;
 	margin: 0 auto;
 	height: 120px;
-	width: 800px;
+	width: 60%;
 	border-bottom: 1px solid #bbb;
 }
 
 .foot_cont_left, .foot_cont_right{
 	float: left;
-	width: 400px;
+	width: 50%;
 }
 .foot_cont_right{
 	text-align: right;
