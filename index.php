@@ -7,6 +7,7 @@ $post_content = [];
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 $post_content[] = '<div class="post" tabindex="1">';
 $post_content[] = '<div class="votes">';
 $post_content[] = '<div class="upvote">';
@@ -32,6 +33,8 @@ $check = mysqli_fetch_array($stmt_check, MYSQLI_ASSOC);
 >>>>>>> parent of 3e882c6... Revert "Partial update to posts and login"
 =======
 >>>>>>> parent of 3e882c6... Revert "Partial update to posts and login"
+=======
+>>>>>>> parent of 3e882c6... Revert "Partial update to posts and login"
 
 // sql prep
 $sql_new = "SELECT content, title, date, uid FROM posts ORDER BY date DESC";
@@ -40,6 +43,7 @@ $stmt_new = mysqli_query($dbconn,$sql_new);
 $stmt_hot = mysqli_query($dbconn,$sql_hot);
 
 // post prep
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 if(isset($check["ID"])){
@@ -72,6 +76,8 @@ if(isset($check["ID"])){
 =======
 =======
 >>>>>>> parent of 3e882c6... Revert "Partial update to posts and login"
+=======
+>>>>>>> parent of 3e882c6... Revert "Partial update to posts and login"
 while($row = mysqli_fetch_row($stmt_new)){
     $post_content[] = '<div class="post" tabindex="1">';
     $post_content[] = '<div class="votes">';
@@ -95,6 +101,9 @@ while($row = mysqli_fetch_row($stmt_new)){
     $post_content[] = '</div>';
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> parent of 3e882c6... Revert "Partial update to posts and login"
+=======
 >>>>>>> parent of 3e882c6... Revert "Partial update to posts and login"
 =======
 >>>>>>> parent of 3e882c6... Revert "Partial update to posts and login"
