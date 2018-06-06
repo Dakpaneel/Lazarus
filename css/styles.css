@@ -60,11 +60,6 @@ nav{
 	line-height: 56px;
 	text-align: center;
 }
-.account_items a{text-decoration: none;transition: 0.2s;}
-.account_items a:visited{color: #fff;}
-.account_items a:hover{color: #d64d4d;}
-.account_items a:link{color: #fff;}
-.account_items a:active{color: #e39e54;}
 
 /*
 	Main section

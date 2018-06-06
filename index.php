@@ -67,7 +67,7 @@ if(isset($check["ID"])){
 			</div>
 			<div class="nav_account">
 				<div class="account_items">
-					<a class="item title" href="login.php">Inloggen</a> / <a class="item title" href="register.php">Registreren</a>
+					<a class="title item" href="login.php">Inloggen</a> / <a class="title item" href="#">Registreren</a>
 				</div>
 			</div>
 		</nav>
