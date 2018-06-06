@@ -2,39 +2,10 @@
 require 'backend/connection.php';
 //require 'backend/preparepost.php';
 
-// initial
-$post_content = [];
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-$post_content[] = '<div class="post" tabindex="1">';
-$post_content[] = '<div class="votes">';
-$post_content[] = '<div class="upvote">';
-$post_content[] = '<button><i class="far fa-arrow-alt-circle-up"></i></button>';
-$post_content[] = '</div>';
-$post_content[] = '<div class="downvote">';
-$post_content[] = '<button><i class="far fa-arrow-alt-circle-down"></i></button>';
-$post_content[] = '</div>';
-$post_content[] = '</div>';
-$post_content[] = '<img src="https://lucenthealth.com/wp-content/uploads/PROFILE-PHOTO-PLACEHOLDER.png" alt="u_avatar">';
-$post_content[] = '<p class="post_title"><a href="#">Test post title.</a></p>';
-$post_content[] = '<p class="post_date">Posted on: 01/01/2010</p>';
-$post_content[] = '<br>';
-$post_content[] = '<p class="post_user">Posted by: <a href="#">User</a></p>';
-$post_content[] = '</div>';
-=======
-
 // database check
 $sql_check = "SELECT ID FROM posts";
 $stmt_check = mysqli_query($dbconn,$sql_check);
 $check = mysqli_fetch_array($stmt_check, MYSQLI_ASSOC);
-=======
->>>>>>> parent of 3e882c6... Revert "Partial update to posts and login"
-=======
->>>>>>> parent of 3e882c6... Revert "Partial update to posts and login"
-=======
->>>>>>> parent of 3e882c6... Revert "Partial update to posts and login"
 
 // sql prep
 $sql_new = "SELECT content, title, date, uid FROM posts ORDER BY date DESC";
@@ -43,9 +14,6 @@ $stmt_new = mysqli_query($dbconn,$sql_new);
 $stmt_hot = mysqli_query($dbconn,$sql_hot);
 
 // post prep
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 if(isset($check["ID"])){
 	while($row = mysqli_fetch_row($stmt_new)){
 		$post_content[] = '<div class="post" tabindex="1">';
@@ -72,41 +40,6 @@ if(isset($check["ID"])){
 } else {
 	$post_content[] = '<div class="errorpost">OOPSIE WOOPSIE!! Uwu We made a fucky wucky!! A wittle fucko boingo! The code monkeys at our headquarters are working VEWY HAWD to fix this!</div>';
 }
->>>>>>> parent of d198edb... Revert "Tiny update"
-=======
-=======
->>>>>>> parent of 3e882c6... Revert "Partial update to posts and login"
-=======
->>>>>>> parent of 3e882c6... Revert "Partial update to posts and login"
-while($row = mysqli_fetch_row($stmt_new)){
-    $post_content[] = '<div class="post" tabindex="1">';
-    $post_content[] = '<div class="votes">';
-    $post_content[] = '<div class="upvote">';
-    $post_content[] = '<button><i class="far fa-arrow-alt-circle-up"></i></button>';
-    $post_content[] = '</div>';
-    $post_content[] = '<div class="downvote">';
-    $post_content[] = '<button><i class="far fa-arrow-alt-circle-down"></i></button>';
-    $post_content[] = '</div>';
-    $post_content[] = '</div>';
-    $post_content[] = '<img src="https://lucenthealth.com/wp-content/uploads/PROFILE-PHOTO-PLACEHOLDER.png" alt="u_avatar">';
-	$post_content[] = '<p class="post_title">'. $row[1] . '</p>';
-    $post_content[] = '<div class="post_date">Posted on:&nbsp;<p>' . $row[2] . '</p></div>';
-    $post_content[] = '<br>';
-	$post_content[] = '<p class="post_user">Posted by: <a href="#">' . $row[3] . '</a>';
-	if($row[0]){
-		$post_content[] = '<p class="readmore"> | Click to read more.</p>';
-	}
-	$post_content[] = '</p>';
-	$post_content[] = '<div class="post_content">' . $row[0] . '</div>';
-    $post_content[] = '</div>';
-}
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> parent of 3e882c6... Revert "Partial update to posts and login"
-=======
->>>>>>> parent of 3e882c6... Revert "Partial update to posts and login"
-=======
->>>>>>> parent of 3e882c6... Revert "Partial update to posts and login"
 ?>
 <!DOCTYPE html>
 <html>
