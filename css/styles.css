@@ -106,10 +106,13 @@ nav{
 	border: 1px solid #bbb;
 	border-radius: 5px;
 	height: auto;
+<<<<<<< HEAD
 }
 .errorpost{
 	text-align: center;
 	margin-top: 20px;
+=======
+>>>>>>> parent of 3e882c6... Revert "Partial update to posts and login"
 }
 .post:focus{
 	outline: none;
