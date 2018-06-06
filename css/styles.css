@@ -44,8 +44,7 @@ nav{
 	line-height: 56px;
 	text-align: left;
 }
-
-.nav_logo a{text-decoration: none;}
+.nav_logo a{text-decoration: none;transition: 0.2s;}
 .nav_logo a:visited{color: #fff;}
 .nav_logo a:hover{color: #d64d4d;}
 .nav_logo a:link{color: #fff;}
@@ -61,7 +60,7 @@ nav{
 	line-height: 56px;
 	text-align: center;
 }
-.account_items a{text-decoration: none;}
+.account_items a{text-decoration: none;transition: 0.2s;}
 .account_items a:visited{color: #fff;}
 .account_items a:hover{color: #d64d4d;}
 .account_items a:link{color: #fff;}
@@ -79,6 +78,15 @@ nav{
 	width: 77%;
 	margin-left: 1%;
 	margin-right: 1%;
+	border: 1px solid #bbb;
+}
+.container_form{
+	background-color: #fff;
+	border-radius: 5px;
+	height: auto;
+	min-height: 70.71vh;
+	width: 48%;
+	margin: 0 auto;
 	border: 1px solid #bbb;
 }
 .main_nav{
@@ -151,7 +159,7 @@ nav{
 .post:hover{
 	background-color: #f5f5f5;
 }
-.post a{text-decoration: none;}
+.post a{text-decoration: none;transition: 0.2s;}
 .post a:visited{color: #000;}
 .post a:hover{color: #d64d4d;}
 .post a:link{color: #000;}
@@ -187,45 +195,6 @@ nav{
 .post_user{
 	color: #666;
 	padding-bottom: 15px;
-}
-
-/*
-	Main Login
-*/
-.container_form{
-	background-color: #fff;
-	border-radius: 5px;
-	height: auto;
-	min-height: 70.71vh;
-	min-width: 280px;
-	width: 28%;
-	margin: 0 auto;
-	border: 1px solid #bbb;
-}
-.login{
-	width: 100%;
-	margin: 0 auto;
-}
-.login div{
-	font-size: 24px;
-}
-input[name=username], input[name=password], input[name=submit]{
-	font-size: 18px;
-	margin-bottom: 20px;
-	padding-left: 10px;
-	width: 240px;
-	height: 40px;
-	border: 1px solid #bbb;
-	border-radius: 5px;
-}
-input[name=username]{
-	
-}
-input[name=password]{
-
-}
-input[name=submit]{
-	
 }
 
 /*
@@ -279,6 +248,7 @@ input[name=submit]{
 	border: 1px solid #bbb;
 	border-radius: 5px;
 	font-size: 16px;
+	transition: 0.2s;
 	color: #fff;
 }
 .new_link_post:hover, .new_text_post:hover{
@@ -314,10 +284,10 @@ footer{
 	text-align: right;
 }
 
-.footer_container{
+.footer_container .item{
 	display: block;
 }
-.item{text-decoration: none; display: block}
+.item{text-decoration: none;transition: 0.2s;}
 .item:visited{color: #fff;}
 .item:hover{color: #d64d4d;}
 .item:link{color: #fff;}

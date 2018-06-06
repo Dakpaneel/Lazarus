@@ -34,12 +34,8 @@ require 'backend/connection.php';
         <!-- End navigation -->
         <!-- Begin main -->
         <form class="main container_form" name="loginform" method="POST" enctype="multipart/form-data" action="">
-            <main class="main login">
+            <main class="main">
                 <div class="title">Username</div>
-				<input type="text" name="username" placeholder="Username"><br>
-				<div class="title">Password</div>
-				<input type="password" name="password" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;"><br>
-				<input type="submit" name="submit" value="Log in">
             </main>     
         </form>
         <!-- End main -->
@@ -47,16 +43,16 @@ require 'backend/connection.php';
 		<footer class="">
 			<div class="footer_container">
 				<div class="foot_cont_left">
-					<a class="l_item_one fitem" href="#">Over ons</a>
-					<a class="l_item_two fitem" href="#">Contact</a>
-					<a class="l_item_three fitem" href="#">Help</a>
-					<a class="l_item_four fitem" href="#">Voorwaarden</a>
+					<a class="l_item_one item" href="#">Over ons</a>
+					<a class="l_item_two item" href="#">Contact</a>
+					<a class="l_item_three item" href="#">Help</a>
+					<a class="l_item_four item" href="#">Voorwaarden</a>
 				</div>
 				<div class="foot_cont_right">
-					<a class="r_item_one fitem" href="#">Doneer</a>
-					<a class="r_item_two fitem" href="#">Werk voor ons</a>
-					<a class="r_item_three fitem" href="#">Regels</a>
-					<a class="r_item_four fitem" href="#">Advertering</a>
+					<a class="r_item_one item" href="#">Doneer</a>
+					<a class="r_item_two item" href="#">Werk voor ons</a>
+					<a class="r_item_three item" href="#">Regels</a>
+					<a class="r_item_four item" href="#">Advertering</a>
 				</div>
 			</div>
 		</footer>
