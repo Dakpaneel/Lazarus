@@ -9,31 +9,18 @@ $i_error = false;
 $c_error = false;
 $p_error = false;
 
-if(isset($_GET["page"])){
-    switch($_GET["page"]){
-        case "profile":     // Shows logged in users profile
-            
-            break;
-        case "login":       // Shows log in form
-            break;
-        case "register":    // Shows register form
-
-            break;
-        case "logout":      // Let's user log out
-            session_destroy();
-            header("location: index.php");
-            break;
-        
-    }
+if($_GET["page"] == "logout"){
+    session_destroy();
+    header("location: index.php");
 }
 if(isset($_POST["submit"])){
-    if($_GET["page"] == "login"){
+    if($_GET["page"] == "login"){// Log in
         $i_error = false;
         $username = htmlspecialchars($_POST["username"]);
         $password = $_POST["password"];
         $password_hashed = password_hash($password,PASSWORD_DEFAULT);
         $SQL = "SELECT `username`, `password` FROM `users` WHERE `username` = ?";
-        if($stmt = $conn->prepare($SQL)){
+        if($stmt = $dbconn->prepare($SQL)){
             $stmt->bind_param("s", $username);
             $stmt->bind_result($username, $password_hashed);
             if($stmt->execute()){
@@ -55,7 +42,7 @@ if(isset($_POST["submit"])){
             }
         }
         $stmt->close();
-    }else if($_GET["page"] == "register"){
+    }else if($_GET["page"] == "register"){// Register
         // Username
         $username = trim($_POST["username"], " \t.");
         // Email
@@ -64,9 +51,9 @@ if(isset($_POST["submit"])){
         $password = $_POST["password"];
         $c_password = $_POST["confirmpassword"];
         // Avatar
-        $img_location = "img/avatars/";
-        $img_location = $img_location . basename($_FILES["avatar"]["name"]);
-        $img_type = pathinfo($img_location,PATHINFO_EXTENSION);
+        //$img_location = "img/avatars/";
+        //$img_location = $img_location . basename($_FILES["avatar"]["name"]);
+        //$img_type = pathinfo($img_location,PATHINFO_EXTENSION);
 
         if($password !== $c_password){
             $c_error = true;
@@ -74,7 +61,7 @@ if(isset($_POST["submit"])){
             $p_error = true;
         }else{
             $password_hashed = password_hash($password,PASSWORD_DEFAULT);
-            $ucheck=$conn->prepare("SELECT `username`, `password` FROM `users` WHERE `username` = ?");
+            $ucheck=$dbconn->prepare("SELECT `username`, `password` FROM `users` WHERE `username` = ?");
             $ucheck->bind_param('s', $username);
             if($ucheck->execute()){
                 $ucheck->store_result();
@@ -82,11 +69,11 @@ if(isset($_POST["submit"])){
                     $ucheck->fetch();
                     $r_error = true;
                 }else{
-                    $stmt=$conn->prepare("INSERT INTO `users` (`username`,`email`,`password`) VALUES (?,?,?)");
+                    $stmt=$dbconn->prepare("INSERT INTO `users` (`username`,`email`,`password`) VALUES (?,?,?)");
                     $stmt->bind_param('sss', $username, $email, $password_hashed);
                     $stmt->execute();
                     $stmt->close();
-                    header("location: ".$_SERVER['PHP_SELF']."?ucreated");
+                    header("location: ".$_SERVER['PHP_SELF']."?page=login");
                 }
 
             }
@@ -106,7 +93,22 @@ if(isset($_POST["submit"])){
 		<meta name="copyright" content="Bradley Oosterveen">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="theme-color" content="#ffffff">
-	    <title></title>
+	    <title>
+        <?php
+        switch($_GET["page"]){
+            case "profile":     // Shows logged in users profile
+                echo $_SESSION["username"];
+                break;
+            case "login":       // Shows log in form
+                echo 'Log in';
+                break;
+            case "register":    // Shows register form
+                echo 'Register';
+                break;
+            
+            }
+        ?>
+        </title>
         <link href="css/base.css" rel="stylesheet" type="text/css">
         <link href="css/styles.css" rel="stylesheet" type="text/css">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
@@ -122,23 +124,89 @@ if(isset($_POST["submit"])){
                     </a>
                 </div>
                 <div class="nav-user dropdown-btn">
-                    <i class="fas fa-user fav-btn"></i>
+                    <?php
+                        if(isset($_SESSION['username'])){
+                            echo '<i class="fas fa-user-check fav-btn"></i>';
+                        }else{
+                            echo '<i class="fas fa-user fav-btn"></i>';
+                        }
+                    ?>
                 </div>
                 <div class="nav-dropdown">
-                    <a href="account.php?page=profile">
-                        <p class="<?php if($_GET["page"] == "profile"){echo "page-active";} ?>">Profile</p>  
-                    </a>
-                    <a href="account.php?page=login">
-                        <p class="<?php if($_GET["page"] == "login"){echo "page-active";} ?>">Log in</p>
-                    </a>
-                    <a href="account.php?page=register">
-                        <p class="<?php if($_GET["page"] == "register"){echo "page-active";} ?>">Register</p>
-                    </a>
-                    <a href="account.php?page=logout">
-                        <p class="<?php if($_GET["page"] == "logout"){echo "page-active";} ?>">Log out</p>
-                    </a>
+                    <?php
+                        if(isset($_SESSION['username'])){
+                            // Profile link
+                            echo '<a href="account.php?page=profile">';
+                            echo '<p class="';
+                            if($_GET["page"] == "profile"){
+                                echo "page-active";
+                            }
+                            echo '">'.$_SESSION['username'].'</p>';
+                            echo '</a>';
+                            // Logout link
+                            echo '<a href="account.php?page=logout">';
+                            echo '<p class="';
+                            if($_GET["page"] == "logout"){
+                                echo "page-active";
+                            }
+                            echo '">Log out</p>';
+                            echo '</a>';
+                        }else{
+                            // Login link
+                            echo '<a href="account.php?page=login">';
+                            echo '<p class="';
+                            if($_GET["page"] == "login"){
+                                echo "page-active";
+                            }
+                            echo '">Log in</p>';
+                            echo '</a>';
+                            // Register link
+                            echo '<a href="account.php?page=register">';
+                            echo '<p class="';
+                            if($_GET["page"] == "register"){
+                                echo "page-active";
+                            }
+                            echo '">Register</p>';
+                            echo '</a>';
+                        }
+                    ?>
                 </div>
             </nav> <!-- End base -->
+            <header class="feedback">
+            <?php
+                if($r_error == true){
+                    echo "<div class='code'>";
+                    echo "<div class='false'>";
+                    echo "<p>Gebruiker bestaat al!</p>";
+                    echo "</div>";
+                    echo "</div>";
+                }elseif(isset($_GET["ucreated"]) && !$i_error == true){
+                    echo "<div class='code'>";
+                    echo "<div class='true'>";
+                    echo "<p>Uw account is aangemaakt!</p>";
+                    echo "</div>";
+                    echo "</div>";
+                }elseif($i_error == true){
+                    echo "<div class='code'>";
+                    echo "<div class='false'>";
+                    echo "<p>U heeft de verkeerde gegevens ingevuld.</p>";
+                    echo "</div>";
+                    echo "</div>";
+                }elseif($p_error == true){
+                    echo "<div class='code'>";
+                    echo "<div class='false'>";
+                    echo "<p>Wachtwoord moet minimaal 6 tekens bevatten.</p>";
+                    echo "</div>";
+                    echo "</div>";
+                }elseif($c_error == true){
+                    echo "<div class='code'>";
+                    echo "<div class='false'>";
+                    echo "<p>Wachtwoorden komen niet overeen.</p>";
+                    echo "</div>";
+                    echo "</div>";
+                }
+            ?>
+            <header>
             <main>
                 <?php
                     if($_GET["page"] == "login" OR $_GET["page"] == "register"){
@@ -152,7 +220,11 @@ if(isset($_POST["submit"])){
                         echo '</div>';
                         echo '<p>Username</p>';
                         echo '<input required type="text" name="username" placeholder="" value="">';
-                        echo '<div class="msg" id="msg">&nbsp;</div>';
+                        if($_GET["page"] == "register"){
+                            echo '<p>Email</p>';
+                            echo '<input required type="email" name="email" placeholder="" value="">';
+                            echo '<div class="msg" id="msg">&nbsp;</div>';
+                        }
                         echo '<div class="title"><p>Password<p></div>';
                         echo '<input id="password" required type="password" name="password" placeholder="" onkeyup="validate()">';
                         if($_GET["page"] == "register"){

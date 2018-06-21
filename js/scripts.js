@@ -1,23 +1,53 @@
-// Navigation menu
-var coll = document.getElementsByClassName("dropdown-btn");
-var i;
-
-for (i = 0; i < coll.length; i++) {
-    coll[i].addEventListener("click", function() {
-        this.classList.toggle("active");
-        var content = this.nextElementSibling;
-        
-        if(content.style.display === "inline") {
-            content.classList.remove("dropdown-open");
-            content.classList.add("dropdown-close");
-            content.style.display = "inline-block";
-        }else{
-            content.classList.add("dropdown-open");
-            content.classList.remove("dropdown-close");
-            content.style.display = "inline";
-        }
-    });
+function dropdownbtn(){
+    // Navigation menu
+    var dropdownbtn = document.getElementsByClassName("dropdown-btn");
+    var i;
+    for (i = 0; i < dropdownbtn.length; i++) {
+        dropdownbtn[i].addEventListener("click", function() {
+            var content = this.nextElementSibling;
+            if(content.style.display === "inline") {
+                // When closed
+                content.classList.remove("dropdown-open");
+                content.classList.add("dropdown-close");
+                content.style.display = "inline-block";
+            }else{
+                // When opened
+                content.classList.add("dropdown-open");
+                content.classList.remove("dropdown-close");
+                content.style.display = "inline";
+            }
+        });
+    }
 }
+dropdownbtn();
+
+function uploadbtn(){
+    // Upload menu
+    var uploadbtn = document.getElementsByClassName("upload-btn");
+    var x;
+    for (x = 0; x < uploadbtn.length; x++) {
+        uploadbtn[x].addEventListener("click", function() {
+            var content = this.nextElementSibling;
+            var btn = this;
+            if(content.style.display === "inline") {
+                // When closed
+                content.classList.remove("upload-open");
+                content.classList.add("upload-close");
+                content.style.display = "inline-block";
+                btn.classList.remove("upload-active");
+                btn.classList.add("upload-inactive");
+            }else{
+                // When opened
+                content.classList.add("upload-open");
+                content.classList.remove("upload-close");
+                content.style.display = "inline";
+                btn.classList.remove("upload-inactive");
+                btn.classList.add("upload-active");
+            }
+        });
+    }
+}
+uploadbtn();
 
 // Password check
 function validate() {

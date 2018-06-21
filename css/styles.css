@@ -17,8 +17,8 @@ main{
     top: 50px;
     margin: 0 auto;
     padding: 10px;
-    background-color: #E3D081;
-    border: 1px solid #54494B;
+    background-color: #F1F7ED;
+    border: 1px solid #bbb;
     border-radius: 5px;
 }
 .legend{

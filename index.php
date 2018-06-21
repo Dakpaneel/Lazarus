@@ -1,4 +1,5 @@
 <?php
+session_start();
 require 'backend/dbconn.php';
 ?>
 <!DOCTYPE html>
@@ -13,7 +14,15 @@ require 'backend/dbconn.php';
 		<meta name="copyright" content="Bradley Oosterveen">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="theme-color" content="#ffffff">
-	    <title></title>
+	    <title>
+        <?php
+        if(isset($_SESSION['username'])){
+            echo 'Welcome '.$_SESSION['username'].'!';
+        }else{
+            echo 'Homepage';
+        }
+        ?>
+        </title>
         <link href="css/base.css" rel="stylesheet" type="text/css">
         <link href="css/styles.css" rel="stylesheet" type="text/css">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
@@ -29,26 +38,55 @@ require 'backend/dbconn.php';
                     </a>
                 </div>
                 <div class="nav-user dropdown-btn">
-                    <i class="fas fa-user fav-btn"></i>
+                    <?php
+                        if(isset($_SESSION['username'])){
+                            echo '<i class="fas fa-user-check fav-btn"></i>';
+                        }else{
+                            echo '<i class="fas fa-user fav-btn"></i>';
+                        }
+                    ?>
                 </div>
                 <div class="nav-dropdown">
-                    <a href="account.php?page=profile">
-                        <p>Profile</p>  
-                    </a>
-                    <a href="account.php?page=login">
-                        <p>Log in</p>
-                    </a>
-                    <a href="account.php?page=register">
-                        <p>Register</p>
-                    </a>
-                    <a href="account.php?page=logout">
-                        <p>Log out</p>
-                    </a>
+                    <?php
+                        if(isset($_SESSION['username'])){
+                            echo '<a href="account.php?page=profile">';
+                            echo '<p>'.$_SESSION['username'].'</p>';
+                            echo '</a>';
+                            echo '<a href="account.php?page=logout">';
+                            echo '<p>Log out</p>';
+                            echo '</a>';
+                        }else{
+                            echo '<a href="account.php?page=login">';
+                            echo '<p>Log in</p>';
+                            echo '</a>';
+                            echo '<a href="account.php?page=register">';
+                            echo '<p>Register</p>';
+                            echo '</a>';
+                        }
+                    ?>
+                </div>
+                <div class="nav-upload upload-btn">
+                    <i class="fas fa-plus fav-btn"></i>
+                </div>
+                <div class="upload-dropdown">
+                    <?php
+                        if(isset($_SESSION["username"])){
+                            echo '<form class="uploadform" name="uploadform" method="POST" enctype="multipart/form-data" action="">';
+                            echo '<div class="legend">';
+                            echo '<p>Upload.</p>';
+                            echo '</div>';
+                            echo '</form>';
+                        }else{
+                            
+                        }
+                    ?>
                 </div>
             </nav> <!-- End base -->
+
             <main class="grid-container">
 
             </main>
+            
             <footer> <!-- Start base -->
                 <div class="title">&copy;Bradley Oosterveen / 2018</div>
             </footer> <!-- End Base -->
