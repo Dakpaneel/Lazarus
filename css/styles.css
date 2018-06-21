@@ -1,0 +1,63 @@
+Color Palette{
+    color: #54494B; /* DARK LIVER */
+    color: #F1F7ED; /* Isabelline */
+    color: #91C7B1; /* Eton Blue */
+    color: #B33951; /* DINGY DUNGEON */
+    color: #E3D081; /* FLAX */
+}
+
+main{
+    min-height: 88.9vh;
+    background-color: #91C7B1;
+}
+
+.accountform{
+    position: relative;
+    width: 400px;
+    top: 50px;
+    margin: 0 auto;
+    padding: 10px;
+    background-color: #E3D081;
+    border: 1px solid #54494B;
+    border-radius: 5px;
+}
+.legend{
+    width: 100%;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    text-align: center;
+    font-size: 24px;
+    border-bottom: 1px solid #54494B;
+}
+
+input{
+    outline: none;
+    width: 100%;
+    height: 40px;
+    margin-bottom: 10px;
+    padding-left: 10px;
+    border: 1px solid #bbb;
+    border-radius: 5px;
+    transition: 0.22s;
+}
+input:focus{
+    border-radius: 20px;
+}
+input[type=submit]{
+    padding-left: 0;
+    background-color: #B33951;
+    color: white;
+}
+
+@media only screen and (max-width: 400px){
+    .accountform{
+        width: auto;
+        margin: 0px 10px;
+    }
+    .legend{
+        font-size: 18px;
+    }
+    input{
+        height: 30px;
+    }
+}
