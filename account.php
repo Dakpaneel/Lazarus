@@ -94,8 +94,7 @@ if(isset($_POST["submit"])){
                     $ucheck->fetch();
                     $r_msg = true;
                 }else{
-                        $img_location = "u_img/standard/".$img_standard[array_rand($img_standard)];
-                        copy($_FILES['avatar']['tmp_name'], $img_location);
+                    copy($_FILES['avatar']['tmp_name'], $img_location);
                     $password_hashed = password_hash($password,PASSWORD_DEFAULT);
                     $stmt=$dbconn->prepare("INSERT INTO `users` (`username`,`email`,`password`,`avatar`) VALUES (?,?,?,?)");
                     $stmt->bind_param('ssss', $username, $email, $password_hashed, $img_location);
