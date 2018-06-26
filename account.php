@@ -1,20 +1,27 @@
 <?php
 session_start();
 require 'backend/dbconn.php';
-$q = ""; // Define query
+include 'backend/functions.php';
+$q = "";
 
 // error messages
-$r_error = false;
-$i_error = false;
-$c_error = false;
-$p_error = false;
+$r_msg = false;
+$i_msg = false;
+$c_msg = false;
+$p_msg = false;
+$f_msg = false;
+$s_msg = false;
 
+// Logout
 if($_GET["page"] == "logout"){
     session_destroy();
     header("location: index.php");
 }
+
+// Log in and register
 if(isset($_POST["submit"])){
-    if($_GET["page"] == "login"){// Log in
+    if($_GET["page"] == "login"){
+        // Log in
         $i_error = false;
         $username = htmlspecialchars($_POST["username"]);
         $password = $_POST["password"];
@@ -29,57 +36,81 @@ if(isset($_POST["submit"])){
                     $stmt->fetch();
                     if(password_verify($password, $password_hashed)){
                         session_start();
-                        $_SESSION['username'] = $_POST['username'];
-                        header("location: index.php");
+                        $_SESSION['username'] = $username;
+                        $_SESSION["ID"] = $_COOKIE["PHPSESSID"];
+                        header("location: ".$_SERVER['PHP_SELF']."?page=profile");
                     }else{
-                        // password
-                        $i_error = true;
+                        // If password is wrong.
+                        $i_msg = true;
                     }
                 }else{
-                    // username
-                    $i_error = true;
+                    // If username is wrong.
+                    $i_msg = true;
                 }
             }
         }
         $stmt->close();
-    }else if($_GET["page"] == "register"){// Register
-        // Username
+    }else if($_GET["page"] == "register"){
+        // Register
         $username = trim($_POST["username"], " \t.");
-        // Email
         $email = $_POST["email"];
-        // Password
         $password = $_POST["password"];
         $c_password = $_POST["confirmpassword"];
-        // Avatar
-        //$img_location = "img/avatars/";
+        $img_location = $dbconn->real_escape_string('u_img/'.$_FILES['avatar']['name']);
         //$img_location = $img_location . basename($_FILES["avatar"]["name"]);
-        //$img_type = pathinfo($img_location,PATHINFO_EXTENSION);
-
+        $img_type = pathinfo($img_location,PATHINFO_EXTENSION);
+        $file_types = array( // All allowed file types. The empty string is for when the user does not upload an avatar.
+            "jpg","JPG",
+            "jpeg","JPEG",
+            "png","PNG",
+            ""
+        );
+        $img_standard = array_diff(scandir("u_img/standard"), array('..', '.'));
+        if(empty($_FILES['avatar']['name'])){
+            $img_location = "u_img/standard/".$img_standard[array_rand($img_standard)];
+        }
+        // Starts with a few checks
         if($password !== $c_password){
-            $c_error = true;
+            // Passwords don't match.
+            $c_msg = true;
         }elseif(strlen(trim($_POST['password'])) < 6){
-            $p_error = true;
+            // Password is less than 6 charachters.
+            $p_msg = true;
+        }elseif(!in_array($img_type,$file_types)){
+            // Filetype check. ($file_types array contains all accepted file types.)
+            $f_msg = true;
+        }elseif($_FILES["avatar"]["size"] > 200000){
+            // Filesize check. (2mb in bytes.)
+            $s_msg = true;
         }else{
-            $password_hashed = password_hash($password,PASSWORD_DEFAULT);
+            // From here a query checks if the username entered exists in the database.
             $ucheck=$dbconn->prepare("SELECT `username`, `password` FROM `users` WHERE `username` = ?");
             $ucheck->bind_param('s', $username);
             if($ucheck->execute()){
                 $ucheck->store_result();
                 if($ucheck->num_rows >= 1){
+                    // If the username the user has entered already exists, a message will popup.
+                    // The user now has to choose another username.
                     $ucheck->fetch();
-                    $r_error = true;
+                    $r_msg = true;
                 }else{
-                    $stmt=$dbconn->prepare("INSERT INTO `users` (`username`,`email`,`password`) VALUES (?,?,?)");
-                    $stmt->bind_param('sss', $username, $email, $password_hashed);
+                        $img_location = "u_img/standard/".$img_standard[array_rand($img_standard)];
+                        copy($_FILES['avatar']['tmp_name'], $img_location);
+                    $password_hashed = password_hash($password,PASSWORD_DEFAULT);
+                    $stmt=$dbconn->prepare("INSERT INTO `users` (`username`,`email`,`password`,`avatar`) VALUES (?,?,?,?)");
+                    $stmt->bind_param('ssss', $username, $email, $password_hashed, $img_location);
                     $stmt->execute();
                     $stmt->close();
-                    header("location: ".$_SERVER['PHP_SELF']."?page=login");
+                    header("location: ".$_SERVER['PHP_SELF']."?page=login&ucreated");
                 }
 
             }
         }
     }
 }
+
+// Profile
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -174,42 +205,29 @@ if(isset($_POST["submit"])){
             </nav> <!-- End base -->
             <header class="feedback">
             <?php
-                if($r_error == true){
-                    echo "<div class='code'>";
-                    echo "<div class='false'>";
-                    echo "<p>Gebruiker bestaat al!</p>";
-                    echo "</div>";
-                    echo "</div>";
-                }elseif(isset($_GET["ucreated"]) && !$i_error == true){
-                    echo "<div class='code'>";
-                    echo "<div class='true'>";
-                    echo "<p>Uw account is aangemaakt!</p>";
-                    echo "</div>";
-                    echo "</div>";
-                }elseif($i_error == true){
-                    echo "<div class='code'>";
-                    echo "<div class='false'>";
-                    echo "<p>U heeft de verkeerde gegevens ingevuld.</p>";
-                    echo "</div>";
-                    echo "</div>";
-                }elseif($p_error == true){
-                    echo "<div class='code'>";
-                    echo "<div class='false'>";
-                    echo "<p>Wachtwoord moet minimaal 6 tekens bevatten.</p>";
-                    echo "</div>";
-                    echo "</div>";
-                }elseif($c_error == true){
-                    echo "<div class='code'>";
-                    echo "<div class='false'>";
-                    echo "<p>Wachtwoorden komen niet overeen.</p>";
-                    echo "</div>";
-                    echo "</div>";
+                if($r_msg == true){ //
+                    r_msg();
+                }elseif(isset($_GET["ucreated"]) && !$i_msg == true){
+                    i_msg_created();
+                }elseif($i_msg == true){
+                    i_msg();
+                }elseif($p_msg == true){
+                    p_msg();
+                }elseif($c_msg == true){
+                    c_msg();
+                }elseif($f_msg == true){
+                    f_msg();
+                }elseif($s_msg == true){
+                    s_msg();
                 }
+                
             ?>
             <header>
             <main>
                 <?php
                     if($_GET["page"] == "login" OR $_GET["page"] == "register"){
+                        // If statement seen above loads in all the regular HTML forms which are needed by both the login and register pages.
+                        // The next few if statements are for loading specific HTML forms.
                         echo '<form class="accountform" name="accountform" method="POST" enctype="multipart/form-data" action="">';
                         echo '<div class="legend">';
                         if(($_GET["page"]) == "register"){
@@ -219,19 +237,30 @@ if(isset($_POST["submit"])){
                         }
                         echo '</div>';
                         echo '<p>Username</p>';
-                        echo '<input required type="text" name="username" placeholder="" value="">';
+                        echo '<input required type="text" name="username" placeholder="" value="';
+                        if(isset($_POST["username"])){
+                            echo $_POST["username"]; // So the user doesn't have to re-enter username.
+                        }
+                        echo '">';
                         if($_GET["page"] == "register"){
                             echo '<p>Email</p>';
-                            echo '<input required type="email" name="email" placeholder="" value="">';
+                            echo '<input required type="email" name="email" placeholder="" value="';
+                            if(isset($_POST["email"])){
+                                echo $_POST["email"]; // So the user doesn't have to re-enter email.
+                            }
+                            echo '">';
                             echo '<div class="msg" id="msg">&nbsp;</div>';
                         }
                         echo '<div class="title"><p>Password<p></div>';
                         echo '<input id="password" required type="password" name="password" placeholder="" onkeyup="validate()">';
                         if($_GET["page"] == "register"){
-                            echo '<div class="title"><p>Repeat</p></div>';
+                            echo '<div class="title"><p>Repeat password</p></div>';
                             echo '<input id="confirmpassword" required type="password" name="confirmpassword" placeholder="" onkeyup="validate()">';
+                            echo '<div class="title"><p>Avatar</p></div>';
+                            echo '<input id="avatar" type="file" name="avatar" accept="u_img/*">';
                         }
                         echo '<input type="submit" name="submit" value=">>>">';
+                        // Redirect links
                         if($_GET["page"] == "register"){
                             echo '<div class="link"><p>Already have an account? ';
                             echo '<a href="'.$_SERVER['PHP_SELF'].'?page=login">Log in.</a>';
@@ -242,6 +271,26 @@ if(isset($_POST["submit"])){
                             echo '</p></div>';
                         }
                         echo '</form>';
+                    }elseif($_GET["page"] == "profile"){
+                        // This if statements shows the profile of the currently logged in user.
+                        $q = "
+                        SELECT `username`, `email`, `date`, `avatar`
+                        FROM  `users`
+                        WHERE `username` = \"".$_SESSION['username']."\"";
+                        $r = $dbconn->query($q);
+                        while($data = $r->fetch_assoc()){
+                            echo '<div class="profile_container">';
+                            echo '<div class="profile_user">';
+                            echo '<div class="profile_avatar">';
+                            echo '<img class="avatar" src="'.$data["avatar"].'" alt="User Avatar">';
+                            echo '</div>';
+                            echo '<div class="profile_username"><p>'.$data["username"].'</p></div>';
+                            echo '<hr>';
+                            echo '<div class="profile_date"><p>Joined on: '.$data["date"].'</p></div>';
+                            echo '</div>';
+                            echo '<hr>';
+                            echo '</div>';
+                        }
                     }
                 ?>
             </main>

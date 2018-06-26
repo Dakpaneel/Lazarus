@@ -1,5 +1,6 @@
 <?php
 session_start();
+$session_id = session_id();
 require 'backend/dbconn.php';
 ?>
 <!DOCTYPE html>
@@ -39,7 +40,7 @@ require 'backend/dbconn.php';
                 </div>
                 <div class="nav-user dropdown-btn">
                     <?php
-                        if(isset($_SESSION['username'])){
+                        if(isset($_SESSION['ID'])){
                             echo '<i class="fas fa-user-check fav-btn"></i>';
                         }else{
                             echo '<i class="fas fa-user fav-btn"></i>';
