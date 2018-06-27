@@ -69,7 +69,7 @@
         echo '<div class="post-title"><p>'.$title.'</p></div>';
         echo '<div class="post-content"><p>'.$content.'</p></div>';
         echo '<div class="post-user"><p>Posted by '.$user;
-        if($_SESSION["username"] == $user){
+        if(isset($_SESSION["username"]) && $_SESSION["username"] == $user){
             echo ' (You)';
         }
         echo '</p></div>';
