@@ -66,26 +66,17 @@ require 'backend/dbconn.php';
                         }
                     ?>
                 </div>
-                <div class="nav-upload upload-btn">
-                    <i class="fas fa-plus fav-btn"></i>
-                </div>
-                <div class="upload-dropdown">
-                    <?php
-                        if(isset($_SESSION["username"])){
-                            echo '<form class="uploadform" name="uploadform" method="POST" enctype="multipart/form-data" action="">';
-                            echo '<div class="legend">';
-                            echo '<p>Upload.</p>';
-                            echo '</div>';
-                            echo '</form>';
-                        }else{
-                            
-                        }
-                    ?>
-                </div>
             </nav> <!-- End base -->
 
-            <main class="grid-container">
+            <main class="main-container">
+                <?php
+                    if(isset($_SESSION['username'])){
+                        include 'upload.php';
+                    }
+                ?>
+                <div class="main-posts">
 
+                </div>
             </main>
             
             <footer> <!-- Start base -->

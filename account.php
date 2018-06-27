@@ -26,19 +26,20 @@ if(isset($_POST["submit"])){
         $username = htmlspecialchars($_POST["username"]);
         $password = $_POST["password"];
         $password_hashed = password_hash($password,PASSWORD_DEFAULT);
-        $SQL = "SELECT `username`, `password` FROM `users` WHERE `username` = ?";
+        $SQL = "SELECT `username`, `password`, `UID` FROM `users` WHERE `username` = ?";
         if($stmt = $dbconn->prepare($SQL)){
             $stmt->bind_param("s", $username);
-            $stmt->bind_result($username, $password_hashed);
             if($stmt->execute()){
                 $stmt->store_result();
+                $stmt->bind_result($username, $password_hashed, $UID);
                 if($stmt->num_rows == 1){
                     $stmt->fetch();
                     if(password_verify($password, $password_hashed)){
-                        session_start();
-                        $_SESSION['username'] = $username;
-                        $_SESSION["ID"] = $_COOKIE["PHPSESSID"];
                         header("location: ".$_SERVER['PHP_SELF']."?page=profile");
+                        session_start();
+                        $_SESSION["UID"] = $UID;
+                        $_SESSION["username"] = $username;
+                        $_SESSION["ID"] = $_COOKIE["PHPSESSID"];
                     }else{
                         // If password is wrong.
                         $i_msg = true;
@@ -79,7 +80,7 @@ if(isset($_POST["submit"])){
         }elseif(!in_array($img_type,$file_types)){
             // Filetype check. ($file_types array contains all accepted file types.)
             $f_msg = true;
-        }elseif($_FILES["avatar"]["size"] > 200000){
+        }elseif($_FILES["avatar"]["size"] > 1000000){
             // Filesize check. (2mb in bytes.)
             $s_msg = true;
         }else{
@@ -272,10 +273,11 @@ if(isset($_POST["submit"])){
                         echo '</form>';
                     }elseif($_GET["page"] == "profile"){
                         // This if statements shows the profile of the currently logged in user.
+                        // Starts out loading the profile.
                         $q = "
-                        SELECT `username`, `email`, `date`, `avatar`
+                        SELECT `username`, `email`, DATE_FORMAT(`date`, '%d %M, %Y at %T'), `avatar`
                         FROM  `users`
-                        WHERE `username` = \"".$_SESSION['username']."\"";
+                        WHERE `username` = \"".$_SESSION["username"]."\"";
                         $r = $dbconn->query($q);
                         while($data = $r->fetch_assoc()){
                             echo '<div class="profile_container">';
@@ -284,12 +286,21 @@ if(isset($_POST["submit"])){
                             echo '<img class="avatar" src="'.$data["avatar"].'" alt="User Avatar">';
                             echo '</div>';
                             echo '<div class="profile_username"><p>'.$data["username"].'</p></div>';
-                            echo '<hr>';
-                            echo '<div class="profile_date"><p>Joined on: '.$data["date"].'</p></div>';
+                            echo '<div class="profile_date"><p>Joined on: '.$data["DATE_FORMAT(`date`, '%d %M, %Y at %T')"].'</p></div>';
                             echo '</div>';
-                            echo '<hr>';
                             echo '</div>';
                         }
+                        // Upload form
+                        if(isset($_SESSION['username'])){
+                            include 'upload.php';
+                        }
+                        // Starts loading the user's posts.
+                        $q = "
+                        SELECT `posts`.`ID`, `posts`.`title`, `posts`.`content`, `posts`.`date`, `posts`.`UID`
+                        FROM `posts`
+                        INNER JOIN `users` ON `posts`.`UID` = `users`.`UID`
+                        WHERE `posts`.`UID` = `users`.`UID`
+                        ";
                     }
                 ?>
             </main>

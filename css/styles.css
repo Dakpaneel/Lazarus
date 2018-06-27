@@ -1,14 +1,34 @@
 Color Palette{
-    color: #54494B; /* DARK LIVER */
-    color: #F1F7ED; /* Isabelline */
-    color: #91C7B1; /* Eton Blue */
-    color: #B33951; /* DINGY DUNGEON */
-    color: #E3D081; /* FLAX */
+    color: #FCECC9;
+    color: #FCB0B3;
+    color: #F93943;
+    color: #7EB2DD;
+    color: #445E93;
 }
 
 main{
     min-height: 88.9vh;
-    background-color: #91C7B1;
+    background-color: #FCECC9;
+}
+
+.post_upload{
+    width: 820px;
+    margin: 0 auto;
+}
+.postform{
+    position: relative;
+    top: 50px;
+    margin: 0 10px;
+    padding: 10px;
+    background-color: #7EB2DD;
+    border: 1px solid #bbb;
+    border-radius: 5px;
+}
+.postform textarea{
+    padding: 5px;
+    border-radius: 5px;
+    width: 100%;
+    margin-bottom: 10px;
 }
 
 .accountform{
@@ -17,7 +37,7 @@ main{
     top: 50px;
     margin: 0 auto;
     padding: 10px;
-    background-color: #F1F7ED;
+    background-color: #FCECC9;
     border: 1px solid #bbb;
     border-radius: 5px;
 }
@@ -57,13 +77,11 @@ input[type=file]{
 /* Profile */
 .profile_container{
     position: relative;
-    top: 10px;
-    width: 80%;
-    margin: 0 auto;
+    top: 50px;
+    width: 350px;
+    margin: 0 auto 25px auto;
     padding: 10px;
-    background-color: #F1F7ED;
-    border: 1px solid #bbb;
-    border-radius: 5px;
+    color: white;
 }
 .profile_user{
     width: 300px;
@@ -78,17 +96,22 @@ input[type=file]{
     width: 100px;
     height: 100px;
     border-radius: 50px;
+    border: 5px solid white;
+    object-fit: cover;
+    object-position: center;
 }
 .profile_username{
+    text-align: right;
+    float: right;
     position: relative;
-    top: -48px;
-    left: 40px;
-    display: inline-block;
+    top: 38px;
     font-size: 20px;
+    width: 200px;
+    border-bottom: 1px solid white;
 }
 .profile_date{
     position: relative;
-    margin: 10px auto;
+    margin: 10px auto 0px auto;
     text-align: center;
 }
 
