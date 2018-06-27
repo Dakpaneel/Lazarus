@@ -1,26 +1,31 @@
 Color Palette{
-    color: #FCECC9;
-    color: #FCB0B3;
-    color: #F93943;
+    color: #eee;
+    color: #333;
+    color: #bbb;
     color: #7EB2DD;
-    color: #445E93;
 }
 
-main{
-    min-height: 88.9vh;
-    background-color: #FCECC9;
+.upload-btn{
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    width: 100%;
+    text-align: center;
+    font-size: 24px;
 }
-
 .post_upload{
-    width: 820px;
+    width: 400px;
     margin: 0 auto;
 }
 .postform{
+    color: #333;
     position: relative;
-    top: 50px;
-    margin: 0 10px;
+    margin: 40px 10px;
     padding: 10px;
-    background-color: #7EB2DD;
+    background-color: white;
     border: 1px solid #bbb;
     border-radius: 5px;
 }
@@ -30,24 +35,29 @@ main{
     width: 100%;
     margin-bottom: 10px;
 }
+.postform-container{
+    position: relative;
+    transition: 0.2s;
+    display: none;
+}
+.upload-close *{display: none;}
+.upload-close{position: absolute;}
 
 .accountform{
+    color: #333;
     position: relative;
     width: 400px;
     top: 50px;
     margin: 0 auto;
     padding: 10px;
-    background-color: #FCECC9;
-    border: 1px solid #bbb;
+    background-color: white;
+    border: 1px solid #ddd;
     border-radius: 5px;
 }
-.legend{
+.accountform .legend{
     width: 100%;
-    margin-bottom: 10px;
-    padding-bottom: 10px;
     text-align: center;
     font-size: 24px;
-    border-bottom: 1px solid #54494B;
 }
 
 input{
@@ -65,7 +75,7 @@ input:focus{
 }
 input[type=submit]{
     padding-left: 0;
-    background-color: #B33951;
+    background-color: #7EB2DD;
     color: white;
 }
 input[type=file]{
@@ -77,11 +87,11 @@ input[type=file]{
 /* Profile */
 .profile_container{
     position: relative;
-    top: 50px;
+    top: 40px;
     width: 350px;
     margin: 0 auto 25px auto;
     padding: 10px;
-    color: white;
+    color: #333;
 }
 .profile_user{
     width: 300px;
@@ -90,16 +100,8 @@ input[type=file]{
 .profile_avatar{
     display: inline-block;
     width: 100px;
-    
 }
-.avatar{
-    width: 100px;
-    height: 100px;
-    border-radius: 50px;
-    border: 5px solid white;
-    object-fit: cover;
-    object-position: center;
-}
+
 .profile_username{
     text-align: right;
     float: right;
@@ -107,7 +109,7 @@ input[type=file]{
     top: 38px;
     font-size: 20px;
     width: 200px;
-    border-bottom: 1px solid white;
+    border-bottom: 1px solid #333;
 }
 .profile_date{
     position: relative;

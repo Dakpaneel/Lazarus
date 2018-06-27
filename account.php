@@ -4,7 +4,7 @@ require 'backend/dbconn.php';
 include 'backend/functions.php';
 $q = "";
 
-// error messages
+// Error messages
 $r_msg = false;
 $i_msg = false;
 $c_msg = false;
@@ -107,10 +107,22 @@ if(isset($_POST["submit"])){
             }
         }
     }
+}else if($_GET["page"] == "profile"){
+    // Profile
+    // Preparing posts
+    $q = "
+    SELECT `posts`.`ID`, `posts`.`title`, `posts`.`content`, `posts`.`date`, `users`.`username`, `users`.`UID`, `users`.`avatar` 
+    FROM `posts` 
+    INNER JOIN `users` 
+    ON `posts`.`UID` = `users`.`UID`
+    WHERE `posts`.`UID` = ".$_SESSION["UID"]."
+    ORDER BY `date` DESC
+    ";
+    $q=$dbconn->prepare($q);
+    $q->execute();
+    $q = $q->get_result();
+    $row = $q->fetch_all();
 }
-
-// Profile
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -249,10 +261,12 @@ if(isset($_POST["submit"])){
                                 echo $_POST["email"]; // So the user doesn't have to re-enter email.
                             }
                             echo '">';
-                            echo '<div class="msg" id="msg">&nbsp;</div>';
+                            echo '<div class="msg p" id="msg">&nbsp;</div>';
                         }
                         echo '<div class="title"><p>Password<p></div>';
-                        echo '<input id="password" required type="password" name="password" placeholder="" onkeyup="validate()">';
+                        echo '<input id="password" required type="password" name="password" placeholder=""';
+                        $x = $_GET["page"] == "register" ? 'onkeyup="validate()">' : '>';
+                        echo $x;
                         if($_GET["page"] == "register"){
                             echo '<div class="title"><p>Repeat password</p></div>';
                             echo '<input id="confirmpassword" required type="password" name="confirmpassword" placeholder="" onkeyup="validate()">';
@@ -275,7 +289,7 @@ if(isset($_POST["submit"])){
                         // This if statements shows the profile of the currently logged in user.
                         // Starts out loading the profile.
                         $q = "
-                        SELECT `username`, `email`, DATE_FORMAT(`date`, '%d %M, %Y at %T'), `avatar`
+                        SELECT `username`, `email`, DATE_FORMAT(`date`, '%d %M, %Y'), `avatar`
                         FROM  `users`
                         WHERE `username` = \"".$_SESSION["username"]."\"";
                         $r = $dbconn->query($q);
@@ -286,26 +300,33 @@ if(isset($_POST["submit"])){
                             echo '<img class="avatar" src="'.$data["avatar"].'" alt="User Avatar">';
                             echo '</div>';
                             echo '<div class="profile_username"><p>'.$data["username"].'</p></div>';
-                            echo '<div class="profile_date"><p>Joined on: '.$data["DATE_FORMAT(`date`, '%d %M, %Y at %T')"].'</p></div>';
+                            echo '<div class="profile_date"><p>Joined on: '.$data["DATE_FORMAT(`date`, '%d %M, %Y')"].'</p></div>';
                             echo '</div>';
                             echo '</div>';
                         }
-                        // Upload form
+                        // Upload form.
+                        // Upload form loads from different file for when user is logged in.
                         if(isset($_SESSION['username'])){
                             include 'upload.php';
                         }
                         // Starts loading the user's posts.
-                        $q = "
-                        SELECT `posts`.`ID`, `posts`.`title`, `posts`.`content`, `posts`.`date`, `posts`.`UID`
-                        FROM `posts`
-                        INNER JOIN `users` ON `posts`.`UID` = `users`.`UID`
-                        WHERE `posts`.`UID` = `users`.`UID`
-                        ";
+                        if(isset($row)){
+                            foreach($row as $a0 => $b0){
+                                get_article(
+                                    $b0[0],
+                                    $b0[1],
+                                    $b0[2],
+                                    $b0[3],
+                                    $b0[4],
+                                    $b0[6]
+                                );
+                            }
+                        }
                     }
                 ?>
             </main>
             <footer> <!-- Start base -->
-                <div class="title">&copy;Bradley Oosterveen / 2018</div>
+                <div class="title">&copy;Bradley Oosterveen | 2018</div>
             </footer> <!-- End Base -->
         </div>
     </body>

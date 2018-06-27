@@ -2,6 +2,20 @@
 session_start();
 $session_id = session_id();
 require 'backend/dbconn.php';
+include 'backend/functions.php';
+
+// Preparing posts
+$q = "
+SELECT `posts`.`ID`, `posts`.`title`, `posts`.`content`, `posts`.`date`, `users`.`username`, `users`.`UID`, `users`.`avatar` 
+FROM `posts` 
+INNER JOIN `users` 
+ON `posts`.`UID` = `users`.`UID` 
+ORDER BY `date` DESC
+";
+$q=$dbconn->prepare($q);
+$q->execute();
+$q = $q->get_result();
+$row = $q->fetch_all(); 
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,15 +29,7 @@ require 'backend/dbconn.php';
 		<meta name="copyright" content="Bradley Oosterveen">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="theme-color" content="#ffffff">
-	    <title>
-        <?php
-        if(isset($_SESSION['username'])){
-            echo 'Welcome '.$_SESSION['username'].'!';
-        }else{
-            echo 'Homepage';
-        }
-        ?>
-        </title>
+	    <title><?php $x = isset($_SESSION['username']) ? 'Welcome '.$_SESSION['username'].'!' : 'Homepage'; echo $x; ?></title>
         <link href="css/base.css" rel="stylesheet" type="text/css">
         <link href="css/styles.css" rel="stylesheet" type="text/css">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
@@ -40,11 +46,9 @@ require 'backend/dbconn.php';
                 </div>
                 <div class="nav-user dropdown-btn">
                     <?php
-                        if(isset($_SESSION['ID'])){
-                            echo '<i class="fas fa-user-check fav-btn"></i>';
-                        }else{
-                            echo '<i class="fas fa-user fav-btn"></i>';
-                        }
+                        // Changes fontawesome to have a nice little checkmark next to it when logged in.
+                        $x = isset($_SESSION['ID']) ? '<i class="fas fa-user-check fav-btn"></i>' : '<i class="fas fa-user fav-btn"></i>';
+                        echo $x;
                     ?>
                 </div>
                 <div class="nav-dropdown">
@@ -67,7 +71,6 @@ require 'backend/dbconn.php';
                     ?>
                 </div>
             </nav> <!-- End base -->
-
             <main class="main-container">
                 <?php
                     if(isset($_SESSION['username'])){
@@ -75,12 +78,30 @@ require 'backend/dbconn.php';
                     }
                 ?>
                 <div class="main-posts">
-
+                    <?php
+                    foreach($row as $a0 => $b0){
+                        get_article(
+                            $b0[0],
+                            $b0[1],
+                            $b0[2],
+                            $b0[3],
+                            $b0[4],
+                            $b0[6]
+                        );
+                    }
+                    ?>
+                    <!-- <div class="post-container">
+                        <div class="post-avatar"><p><img class="avatar" src="u_img/standard/ana_de_armas_ti_1.jpg"></p></div>
+                        <div class="post-title"><p>Dit is een test post.</p></div>
+                        <div class="post-content"><p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sed aspernatur, maxime quaerat modi quis neque.</p></div>
+                        <div class="post-user"><p>Dakpaneel</p></div>
+                        <div class="post-date"><p>12-09-1999</p></div>
+                        <input type="hidden" name="ID" value="12">
+                    </div> -->
                 </div>
             </main>
-            
             <footer> <!-- Start base -->
-                <div class="title">&copy;Bradley Oosterveen / 2018</div>
+                <div class="title">&copy;Bradley Oosterveen | 2018</div>
             </footer> <!-- End Base -->
         </div>
     </body>

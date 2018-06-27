@@ -5,17 +5,25 @@ Color Palette{
     color: #7EB2DD;
     color: #445E93;
 }
-html{background-color: #7EB2DD; overflow-y: scroll; overflow-x: hidden;}
-body{background-color: #7EB2DD;}
 
 /* BASE CSS */
+html{background-color: #eee; overflow-y: scroll; overflow-x: hidden;}
+body{background-color: #eee;}
 *{
     padding: 0;
     margin: 0;
     box-sizing: border-box;
 }
-.title{font-family: 'Work Sans', sans-serif;}
-p{font-family: 'Rubik', sans-serif;}
+.title, textarea::placeholder{font-family: 'Work Sans', sans-serif;}
+p, .p{font-family: 'Rubik', sans-serif;}
+.avatar{
+    width: 100px;
+    height: 100px;
+    border-radius: 50px;
+    border: 2px solid #333;
+    object-fit: cover;
+    object-position: center;
+}
 
 /* NAVIGATION */
 nav{
@@ -48,7 +56,7 @@ nav{
 
 .nav-dropdown a{
     text-decoration: none;
-    color: #54494B;
+    color: #333;
 }
 
 .nav-dropdown p{
@@ -64,14 +72,14 @@ i{position: relative;}
 
 .fav-btn, .nav-dropdown a{
     cursor: pointer;
-    color: #54494B;
+    color: #333;
     transform: scale(1);
     text-decoration: none;
     transition: 0.22s;
 }
 
 .fav-btn:hover, .nav-dropdown a:hover{
-    color: #7EB2DD;
+    color: white;
     transform: scale(1.1);
 }
 
@@ -87,20 +95,18 @@ i{position: relative;}
 .dropdown-close{animation-name: dropdown-close; position: absolute;}
 .dropdown-open{animation-name: dropdown-open;}
 
-.upload-close{animation-name: upload-close; position: absolute;}
-.upload-open{animation-name: upload-open;}
-
+/* 
 .upload-inactive i{animation-name: upload-inactive;}
 .upload-active i{animation-name: upload-active;}
-
+ */
 .page-active{
-    background-color: #FCECC9;
-    border-bottom: 1px solid #FCECC9;
+    background-color: #eee;
+    border-bottom: 1px solid #eee;
     transition: 0.22s;
-    color: #54494B;
+    color: #333;
 }
 .page-active:hover{
-    color: #FCECC9;
+    color: #7EB2DD;
 }
 
 /* Code */
@@ -148,16 +154,42 @@ i{position: relative;}
         opacity: 0;
     }
 }
+/* MAIN */
+main{
+    background-color: #eee;
+}
+
+/* POSTS */
+.post-container{
+    margin: 5px 0px;
+    padding: 10px;
+    background-color: white;
+    border-top: 1px solid #bbb;
+    border-bottom: 1px solid #bbb;
+    overflow: auto;
+}
+.post-avatar{
+    width: 100px;
+    float: left;
+    margin-right: 10px;
+}
+.post-title, .post-content, .post-user, .post-date{
+    width: calc(100% - 110px);
+    float: right;
+    text-align: left;
+}
 
 /* FOOTER */
 footer{
-    padding-left: 10px;
+    position: fixed;
+    color: #333;
+    top: calc(100vh - 25px);
     text-align: center;
     width: 100%;
-    height: 3vh;
-    line-height: 3vh;
+    height: 25px;
+    line-height: 25px;
     border-top: 1px solid #bbb;
-    background-color: #7EB2DD;
+    background-color: white;
 }
 
 /* Keyframes dropdown menu */
@@ -186,50 +218,6 @@ footer{
     }
 }
 
-/* Keyframes upload menu */
-@keyframes upload-close{
-    from{
-        margin-left: -200px;
-        opacity: 1;
-        z-index: 1000;
-    }
-    to{
-        margin-left: 0px;
-        opacity: 0;
-        z-index: -1;
-    }
-}
-@keyframes upload-open{
-    from{
-        margin-left: 0px;
-        opacity: 0;
-        z-index: -1;
-    }
-    to{
-        margin-left: -200px;
-        opacity: 1;
-        z-index: 1000;
-    }
-}
-
-/* Keyframes upload active */
-@keyframes upload-inactive{
-    from{
-        transform: rotate(45deg);
-    }
-    to{
-        transform: rotate(0deg);
-    }
-}
-@keyframes upload-active{
-    from{
-        transform: rotate(0deg);
-    }
-    to{
-        transform: rotate(45deg);
-    }
-}
-
 @media only screen and (max-width: 500px){
     /* NAVIGATION */
     .nav-home i, .nav-user i, .nav-upload i{
@@ -237,10 +225,10 @@ footer{
     }
     .nav-dropdown{
         font-size: 14px;
-        width: 125px;
+        width: 200px;
     }
     .nav-dropdown p{
-        width: 55px;
+        width: 100px;
         display: inline-block;
     }
 }
@@ -254,14 +242,14 @@ footer{
         font-size: 18px;
     }
     nav{
-        height: 6vh;
-        line-height: 5.5vh;
+        height: 50px;
+        line-height: 50px;
     }
     .nav-dropdown{
         font-size: 12px;
         width: 200px;
-        height: 6vh;
-        line-height: 5.5vh;
+        height: 50px;
+        line-height: 50px;
     }
     .nav-dropdown p{
         width: 100px;
