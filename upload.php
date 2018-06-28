@@ -20,9 +20,9 @@
     echo '<div class="legend upload-btn"><p>Upload</p></div>';
     echo '<div class="postform-container">';
     echo '<p>Title</p>';
-    echo '<textarea required name="title" maxlength="124" cols="100" rows="1" placeholder="Title"></textarea>';
+    echo '<textarea required name="title" maxlength="130" cols="100" rows="1" placeholder="Title"></textarea>';
     echo '<p>Text</p>';
-    echo '<textarea name="text" maxlength="255" cols="100" rows="6" placeholder="Text (Optional)"></textarea>';
+    echo '<textarea name="text" maxlength="2048" cols="100" rows="6" placeholder="Text (Optional)"></textarea>';
     echo '<input type="submit" name="submit" value=">>>">';
     echo '<input type="hidden" name="UID" value="'.$_SESSION["UID"].'">';
     echo '</div>';

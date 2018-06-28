@@ -297,7 +297,7 @@ if(isset($_POST["submit"])){
                             echo '<div class="profile_container">';
                             echo '<div class="profile_user">';
                             echo '<div class="profile_avatar">';
-                            echo '<img class="avatar" src="'.$data["avatar"].'" alt="User Avatar">';
+                            echo '<img class="avatar you" src="'.$data["avatar"].'" alt="User Avatar">';
                             echo '</div>';
                             echo '<div class="profile_username"><p>'.$data["username"].'</p></div>';
                             echo '<div class="profile_date"><p>Joined on: '.$data["DATE_FORMAT(`date`, '%d %M, %Y')"].'</p></div>';

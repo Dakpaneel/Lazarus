@@ -20,7 +20,7 @@ p, .p{font-family: 'Rubik', sans-serif;}
     width: 100px;
     height: 100px;
     border-radius: 50px;
-    border: 2px solid #333;
+    border: 3px solid #333;
     object-fit: cover;
     object-position: center;
 }
@@ -157,16 +157,18 @@ i{position: relative;}
 /* MAIN */
 main{
     background-color: #eee;
+    margin-bottom: 30px;
 }
 
 /* POSTS */
 .post-container{
-    margin: 5px 0px;
+    max-width: 800px;
+    margin: 5px auto;
     padding: 10px;
     background-color: white;
-    border-top: 1px solid #bbb;
-    border-bottom: 1px solid #bbb;
+    border: 1px solid #bbb;
     overflow: auto;
+    color: #333;
 }
 .post-avatar{
     width: 100px;
@@ -178,6 +180,26 @@ main{
     float: right;
     text-align: left;
 }
+.post-title p{
+    border-bottom: 1px solid #bbb;
+    margin-bottom: 5px;
+    font-size: 20px;
+}
+.post-content{
+    margin-bottom: 5px;
+    padding: 10px;
+    background-color: rgb(245, 245, 245);
+    border: 1px solid #bbb;
+    border-radius: 5px;
+}
+.post-user{
+    height: 20px;
+}
+.post-date{
+    margin-top: -20px;
+    height: 20px;
+    text-align: right;
+}
 
 /* FOOTER */
 footer{
@@ -187,7 +209,7 @@ footer{
     text-align: center;
     width: 100%;
     height: 25px;
-    line-height: 25px;
+    overflow: hidden;
     border-top: 1px solid #bbb;
     background-color: white;
 }
@@ -218,6 +240,12 @@ footer{
     }
 }
 
+@media only screen and (max-width: 600px){
+    .post-date, .post-user{
+        font-size: 14px;
+    }
+}
+
 @media only screen and (max-width: 500px){
     /* NAVIGATION */
     .nav-home i, .nav-user i, .nav-upload i{
@@ -230,6 +258,22 @@ footer{
     .nav-dropdown p{
         width: 100px;
         display: inline-block;
+    }
+    .post-title p{
+        font-size: 16px;
+    }
+    .post-content p{
+        font-size: 14px;
+    }
+    .post-date{
+        margin-top: 0px;
+        text-align: left;
+        float: left;
+        width: 100%;
+    }
+    .post-avatar img{
+        width: 80px;
+        height: 80px;
     }
 }
 
@@ -253,5 +297,12 @@ footer{
     }
     .nav-dropdown p{
         width: 100px;
+    }
+    .post-content{
+        float: left;
+        width: 100%;
+    }
+    .post-user{
+        float: left;
     }
 }

@@ -88,7 +88,7 @@ input[type=file]{
 .profile_container{
     position: relative;
     top: 40px;
-    width: 350px;
+    max-width: 350px;
     margin: 0 auto 25px auto;
     padding: 10px;
     color: #333;
@@ -101,7 +101,9 @@ input[type=file]{
     display: inline-block;
     width: 100px;
 }
-
+.you{
+    border-color: #7EB2DD;
+}
 .profile_username{
     text-align: right;
     float: right;
@@ -109,7 +111,7 @@ input[type=file]{
     top: 38px;
     font-size: 20px;
     width: 200px;
-    border-bottom: 1px solid #333;
+    border-bottom: 1px solid #7EB2DD;
 }
 .profile_date{
     position: relative;
@@ -118,6 +120,9 @@ input[type=file]{
 }
 
 @media only screen and (max-width: 400px){
+    .post_upload{
+        width: 100%;
+    }
     .accountform{
         width: auto;
         margin: 0px 10px;

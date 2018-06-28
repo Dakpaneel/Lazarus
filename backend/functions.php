@@ -65,15 +65,21 @@
     // Structure of the posts
     function get_article($ID, $title, $content, $date, $user, $avatar){
         echo '<div class="post-container">';
-        echo '<div class="post-avatar"><p><img class="avatar" src="'.$avatar.'"></p></div>';
+        echo '<div class="post-avatar"><p><img class="avatar ';
+        if(isset($_SESSION["username"]) && $_SESSION["username"] == $user){
+            echo 'you';
+        }
+        echo '" src="'.$avatar.'"></p></div>';
         echo '<div class="post-title"><p>'.$title.'</p></div>';
-        echo '<div class="post-content"><p>'.$content.'</p></div>';
+        if($content !== ""){
+            echo '<div class="post-content"><p>'.$content.'</p></div>'; 
+        }
         echo '<div class="post-user"><p>Posted by '.$user;
         if(isset($_SESSION["username"]) && $_SESSION["username"] == $user){
             echo ' (You)';
         }
         echo '</p></div>';
-        echo '<div class="post-date"><p>Posted on: '.$date.'</p></div>';
+        echo '<div class="post-date"><p>Posted on '.$date.'</p></div>';
         echo '<input type="hidden" name="ID" value="'.$ID.'">';
         echo '</div>';
     }
