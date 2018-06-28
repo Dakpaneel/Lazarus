@@ -58,7 +58,6 @@ if(isset($_POST["submit"])){
         $password = $_POST["password"];
         $c_password = $_POST["confirmpassword"];
         $img_location = $dbconn->real_escape_string('u_img/'.$_FILES['avatar']['name']);
-        //$img_location = $img_location . basename($_FILES["avatar"]["name"]);
         $img_type = pathinfo($img_location,PATHINFO_EXTENSION);
         $file_types = array( // All allowed file types. The empty string is for when the user does not upload an avatar.
             "jpg","JPG",
@@ -307,10 +306,10 @@ if(isset($_POST["submit"])){
                         // Upload form.
                         // Upload form loads from different file for when user is logged in.
                         if(isset($_SESSION['username'])){
-                            include 'upload.php';
+                            include 'backend/upload.php';
                         }
                         // Starts loading the user's posts.
-                        if(isset($row)){
+                        if($row){
                             foreach($row as $a0 => $b0){
                                 get_article(
                                     $b0[0],
@@ -321,6 +320,10 @@ if(isset($_POST["submit"])){
                                     $b0[6]
                                 );
                             }
+                        }else{
+                            echo '<div class="post-container">';
+                            echo '<p class="title">You have not posted anything yet. Click the button above to post something!</p>';
+                            echo '</div>';
                         }
                     }
                 ?>

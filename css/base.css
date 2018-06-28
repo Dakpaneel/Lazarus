@@ -167,6 +167,7 @@ main{
     padding: 10px;
     background-color: white;
     border: 1px solid #bbb;
+    border-radius: 5px;
     overflow: auto;
     color: #333;
 }
@@ -175,7 +176,7 @@ main{
     float: left;
     margin-right: 10px;
 }
-.post-title, .post-content, .post-user, .post-date{
+.post-title, .post-content, .post-user, .post-date, .post-edit{
     width: calc(100% - 110px);
     float: right;
     text-align: left;
@@ -200,7 +201,26 @@ main{
     height: 20px;
     text-align: right;
 }
-
+.post-edit{
+    z-index: 99;
+    background-color: rgb(245, 245, 245);
+    border: 1px solid #bbb;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 5px;
+}
+.post-edit:hover .editform{
+    display: block;
+}
+.editform{
+    margin-top: 10px;
+    position: relative;
+    width: 100%;
+    display: none;
+}
+.editform textarea{
+    width: 100%;
+}
 /* FOOTER */
 footer{
     position: fixed;
@@ -259,11 +279,17 @@ footer{
         width: 100px;
         display: inline-block;
     }
+    .post-container{
+        margin: 5px 5px;
+    }
     .post-title p{
         font-size: 16px;
     }
     .post-content p{
         font-size: 14px;
+    }
+    .post-user{
+        float: left;
     }
     .post-date{
         margin-top: 0px;
@@ -304,5 +330,28 @@ footer{
     }
     .post-user{
         float: left;
+    }
+
+    .post-edit{
+        float: left;
+        width: 100%;
+        /* z-index: 99;
+        background-color: rgb(245, 245, 245);
+        border: 1px solid #bbb;
+        border-radius: 5px;
+        padding: 10px;
+        margin-bottom: 5px; */
+    }
+    .post-edit:hover .editform{
+        display: block;
+    }
+    .editform{
+        margin-top: 10px;
+        position: relative;
+        width: 100%;
+        display: none;
+    }
+    .editform textarea{
+        width: 100%;
     }
 }

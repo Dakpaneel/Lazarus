@@ -29,7 +29,7 @@ Color Palette{
     border: 1px solid #bbb;
     border-radius: 5px;
 }
-.postform textarea{
+textarea{
     padding: 5px;
     border-radius: 5px;
     width: 100%;

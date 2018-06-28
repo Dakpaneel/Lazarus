@@ -74,30 +74,32 @@ $row = $q->fetch_all();
             <main class="main-container">
                 <?php
                     if(isset($_SESSION['username'])){
-                        include 'upload.php';
+                        include 'backend/upload.php';
+                    }else{
+                        echo '<div class="post-container">';
+                        echo '<p class="title">You are not logged in.</p>';
+                        echo '</div>';
                     }
                 ?>
                 <div class="main-posts">
                     <?php
-                    foreach($row as $a0 => $b0){
-                        get_article(
-                            $b0[0],
-                            $b0[1],
-                            $b0[2],
-                            $b0[3],
-                            $b0[4],
-                            $b0[6]
-                        );
+                    if($row){
+                        foreach($row as $a0 => $b0){
+                            get_article(
+                                $b0[0],
+                                $b0[1],
+                                $b0[2],
+                                $b0[3],
+                                $b0[4],
+                                $b0[6]
+                            );
+                        }
+                    }else{
+                        echo '<div class="post-container">';
+                        echo '<p class="title">There are currently no posts available.</p>';
+                        echo '</div>';
                     }
                     ?>
-                    <!-- <div class="post-container">
-                        <div class="post-avatar"><p><img class="avatar" src="u_img/standard/ana_de_armas_ti_1.jpg"></p></div>
-                        <div class="post-title"><p>Dit is een test post.</p></div>
-                        <div class="post-content"><p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sed aspernatur, maxime quaerat modi quis neque.</p></div>
-                        <div class="post-user"><p>Dakpaneel</p></div>
-                        <div class="post-date"><p>12-09-1999</p></div>
-                        <input type="hidden" name="ID" value="12">
-                    </div> -->
                 </div>
             </main>
             <footer> <!-- Start base -->

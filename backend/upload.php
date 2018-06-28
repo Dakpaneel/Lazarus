@@ -23,7 +23,7 @@
     echo '<textarea required name="title" maxlength="130" cols="100" rows="1" placeholder="Title"></textarea>';
     echo '<p>Text</p>';
     echo '<textarea name="text" maxlength="2048" cols="100" rows="6" placeholder="Text (Optional)"></textarea>';
-    echo '<input type="submit" name="submit" value=">>>">';
+    echo '<input type="submit" name="submit" value="Continue">';
     echo '<input type="hidden" name="UID" value="'.$_SESSION["UID"].'">';
     echo '</div>';
     echo '</form>';
